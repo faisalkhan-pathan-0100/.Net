@@ -1,450 +1,277 @@
-﻿using System.Collections;
-namespace Practice
+﻿namespace PracticeDay5
 {
     internal class Program
     {
-        public delegate void Del1(); // create the delegate
-        public delegate int Del2(int a, int b);
-        static void Main(string[] args) //generic type
+        static void Main1(string[] args) // exception prone code without handling // NRP,DBZ,FE
         {
-            IntegerStack stack = new IntegerStack(4);
-            stack.Push(10);
-            stack.Push(20);
-            stack.Push(30);
-            stack.Push(40);
-            //Console.WriteLine(stack.Pop());
-            //Console.WriteLine(stack.Pop());
-            //Console.WriteLine(stack.Pop());
-
-            StringStack stack1 = new StringStack(3);
-            stack1.Push("faisalkhan");
-            stack1.Push("shahidkhan");
-            stack1.Push("fatimakhan");
-            //stack1.Push("saif"); //overflow
-
-            //Console.WriteLine(stack1.Pop());
-            //Console.WriteLine(stack1.Pop());
-            //Console.WriteLine(stack1.Pop());
-            //Console.WriteLine(stack1.Pop()); // underflow
-
-            MyStack<int> stack2 = new MyStack<int>(5);
-
-            stack2.Push(1);
-            stack2.Push(2);
-            stack2.Push(3);
-            stack2.Push(4);
-            stack2.Push(5);
-
-            //Console.WriteLine(stack2.Pop());
-            //Console.WriteLine(stack2.Pop());
-            //Console.WriteLine(stack2.Pop());
-
-            MyStack<string> stack3 = new MyStack<string>(5);
-
-            stack3.Push("faisalkhan");
-            stack3.Push("shahidkhan");
-            stack3.Push("fatima");
-            stack3.Push("sara");
-            stack3.Push("ammi");
-
-            //Console.WriteLine(stack3.Pop());
-            //Console.WriteLine(stack3.Pop());
-            //Console.WriteLine(stack3.Pop());
-
-
+            Class1 obj = new Class1();
+            //obj = null;
+            int x = Convert.ToInt32(Console.ReadLine());
+            obj.P1 = 100 / x;
+            Console.WriteLine(obj.P1);
         }
 
-        static void Main2() // collection
+        static void Main2() //try with multiple catch 
         {
-            ArrayList al = new ArrayList();
-            al.Add("faisalkhan");
-            al.Add(25);
-            al.Add(2599.0);
-            al.Add(true);
-            al.Insert(0, "Mohammad");
-            //al.RemoveAt(1);
-            //al.Remove("Mohammad");
-
-            ArrayList al1 = new ArrayList();
-            al1.Add(10);
-            al1.Add(20);
-            //al.AddRange(al1);
-            //al.InsertRange(0, al1);
-
-            ArrayList al2 = new ArrayList();
-            al2 = (ArrayList)al.Clone();
-
-            Console.WriteLine(al.Contains("Faisalkhan")); // false -> F capital
-            //foreach (object elemet in al)
-            //{
-            //    Console.WriteLine(elemet);
-            //}
-            Console.WriteLine(al.Count + " " + al.Capacity);
-            al.TrimToSize();
-            Console.WriteLine(al.Count + " " + al.Capacity);
-        }
-
-        static void Main3() //collection
-        {
-            //Hashtable objDictionary = new Hashtable();
-            SortedList objDictionary = new SortedList();
-            objDictionary.Add(50, "Isha");
-            objDictionary.Add(30, "Shriram");
-            objDictionary.Add(10, "Shubham");
-            objDictionary.Add(20, "Rohan");
-            objDictionary.Add(40, "Ritik");
-
-            objDictionary[60] = "Vikram";
-            objDictionary[50] = "changed value";
-
-            //objDictionary.Remove(60); //key
-            //objDictionary.RemoveAt(0); //index
-
-            //foreach (DictionaryEntry item in objDictionary)
-            //{
-            //    Console.WriteLine(item.Key);
-            //    Console.WriteLine(item.Value);
-            //}
-
-
-            //Console.WriteLine(objDictionary.GetByIndex(0)); //value at index 0
-            //Console.WriteLine(objDictionary.GetKey(2));//key at index 0
-            IList keys = objDictionary.GetKeyList();
-            //foreach (object key in keys)
-            //{
-            //    Console.WriteLine(key);
-            //}
-            IList value = objDictionary.GetValueList();
-            //foreach (object v in value)
-            //{
-            //    Console.WriteLine(v);
-            //}
-            //objDictionary.IndexOfKey(key);
-            //objDictionary.IndexOfValue(value);
-
-            ICollection keys2 = objDictionary.Keys;
-            foreach (object key in keys2)
+            try
             {
-                Console.WriteLine(key);
+                Class1 obj = new Class1();
+                //obj = null;
+                int x = Convert.ToInt32(Console.ReadLine());
+                obj.P1 = 100 / x;
+                Console.WriteLine(obj.P1);
             }
-            ICollection values2 = objDictionary.Values;
-
-            //objDictionary.SetByIndex(index, value);
-
-        }
-
-        static void Main4() //delegate
-        {
-            //Del1 d1 = new Del1(Display);
-            //d1();
-            //Del1 d2 = new Del1(Show);
-            //d2();
-            //short synatx
-            //Del1 d3 = Display;
-            //d3();
-            //Del1 d4 = Show;
-            //d4();
-
-            Del1? d5 = Display;
-            //d5();
-            d5 += Show; // MultiCastDelegate
-            d5 += Display;
-            d5 += Show;
-            d5 -= Show;
-            d5 -= Show;
-            d5 -= Display;
-            d5 -= Display;
-            if (d5 != null)
-                d5();
-            else
-                Console.WriteLine("null value");
-        }
-
-        static void Main5() //delegate
-        {
-            //create object of the Delegate
-            Del2 d2 = Add;
-            int res = d2(10, 20);
-
-            d2 += Sub;
-            res = d2(100, 50);
-
-            d2 += Add;
-            res = d2(200, 100);
-            
-
-            Class1 c = new Class1();
-            d2 += c.Mul; // non static method of the other class
-            res = d2(2, 3);
-
-            d2 += Class1.Div; // static method of other class
-            res = d2(10, 5);
-            Console.WriteLine(res);
-        }
-
-        static void Main6() // call multiple method with one delegate
-        {
-            Del1 d1 = (Del1)Delegate.Combine(new Del1(Display), new Del1(Show), new Del1(Display), new Del1(Show));
-            //d1(); // multiple method call with one delegate;
-
-            Console.WriteLine(MathOperation(Add, 100,200));
-            Console.WriteLine(MathOperation(Sub, 50,20));
-
-        }
-
-        static void Main7() // inbuilt delegate
-        {
-            //void with zero paramter 
-            Action a1 = Display;
-            a1();
-            Action a2 = Show;
-            a2();
-
-            // void with paramter
-            Action<string, string> a3 = Display;
-            a3("faisalkhan", "pathan");
-
-            // non void RT and parameter
-            Func<int, int, int> a4 = Add;
-            Console.WriteLine(a4(90, 90));
-
-            Func<int, bool> a5 = IsEven;
-            Console.WriteLine(a5(110));
-
-            // non void with one RT bool
-            Predicate<int> a6 = IsEven;
-            Console.WriteLine(a6(19));
-            
-        }
-
-        static void Main8() // anonymouse method
-        {
-            Func<int, int, int> a1 = delegate(int a, int b)
-             {
-                return a + b;
-             };
-            Console.WriteLine(a1(999, 1));
-
-            Action a2 = delegate ()
+            catch (NullReferenceException e1)
             {
-                Console.WriteLine("Display");
-            };
-            a2();
-
-            Action a3 = delegate ()
+                Console.WriteLine(e1.Message);
+            }
+            catch (FormatException fe)
             {
-                Console.WriteLine("Show");
-            };
-            a3();
-
-            Func<int, int, int> a4 = delegate (int a, int b)
+                Console.WriteLine(fe.Message);
+            }
+            catch (ArithmeticException ae) 
             {
-                return a - b;
-            };
-            Console.WriteLine(a4(500,500));
+                Console.WriteLine(ae.Message);
+            }
+            Console.WriteLine("bye bye");
+        }
 
-            Func<string, string, string> a5 = delegate (string a, string b)
+        static void Main3() //try with multiple catch and finally block
+        {
+            try
             {
-                return a + " " + b;
-            };
-            Console.WriteLine(a5("shahidkhan", "pathan"));
-
-            Func<string> a6 = delegate ()
+                Class1 obj = new Class1();
+                //obj = null;
+                int x = Convert.ToInt32(Console.ReadLine());
+                obj.P1 = 100 / x;
+                Console.WriteLine(obj.P1);
+            }
+            catch (NullReferenceException e1)
             {
-                return DateTime.Now.ToLongDateString()+" "+ DateTime.Now.ToLongTimeString();
-            };
-            Console.WriteLine(a6());
-
-            Func<int, bool> a7 = delegate (int a)
+                Console.WriteLine(e1.Message);
+               
+            }
+            catch (FormatException fe)
             {
-                return a % 2 == 0;
-            };
-            Console.WriteLine(a7(75));
-
-            Predicate<int> a8 = delegate (int a)
+                Console.WriteLine(fe.Message);
+                return; // still finally block is executed
+               
+            }
+            catch (ArithmeticException ae)
             {
-                return a % 2 == 0;
-            };
-            Console.WriteLine(a8(99));
+                Console.WriteLine(ae.Message);
+            }
+            finally
+            {
+                Console.WriteLine("ececuted every time");
+            }
+            Console.WriteLine("bye bye");
+
+            /*
+             line 68 will not execute if exception is not handled with try and catch or if return statument is there in any of the catch block
+
+            finally block will execute either exception ocuure or not occure.
+             */
         }
 
-        static void Main9() // lamda function
+        static void Main4()// nested try block
         {
-            Action a1 = () => Console.WriteLine("Display"); a1();
-            Action a2 = () => Console.WriteLine("Show"); a2();
-            Func<int, int, int> a3 = (a, b) => a + b; Console.WriteLine(a3(6,6));
-            Func<int, int, int> a4 = (a, b) => a - b; Console.WriteLine(a4(16,6));
-            Func<string, string, string> a5 = (a,b) =>  a+" " + b;  Console.WriteLine(a5("sarakhan" ,"pathan"));
-            Func<string> a6 = () => DateTime.Now.ToLongTimeString(); Console.WriteLine(a6());
-            Func<int, bool> a7 = a => a % 2 == 0; Console.WriteLine(a7(20));
-            Predicate<int> a8 = a => a % 2 == 0; Console.WriteLine(a8(100));
+            Class1 obj = new Class1();
+            try
+            {
+                //obj = null;
+                int x = Convert.ToInt32(Console.ReadLine());
+                obj.P1 = 100 / x;
+                Console.WriteLine(obj.P1);
+                Console.WriteLine("No Exceptions");
+            }
 
-        }
-        static void Display()
-        {
-            Console.WriteLine("Display");
-        }
-        static void Show()
-        {
-            Console.WriteLine("Show");
-        }
+            catch (FormatException ex)
+            {
+                try
+                {
+                    Console.WriteLine("FormatException occurred. Enter only numbers");
+                    int x = Convert.ToInt32(Console.ReadLine());
+                    obj.P1 = 100 / x;
+                    Console.WriteLine(obj.P1);
+                }
+                catch
+                {
+                    Console.WriteLine("nested try catch example");
+                }
+                finally
+                {
+                    Console.WriteLine("nested try finally example");
+                }
+            }
+            catch (NullReferenceException ex)
+            {
+                Console.WriteLine("NRException occurred");
+            }
+            catch (DivideByZeroException ex)
+            {
+                Console.WriteLine("DBException occurred");
+            }
+            catch (Exception ex) //catches all unhandled exceptions
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                Console.WriteLine("outer finally");
 
-        static int Add(int a, int b)
-        {
-            return a + b;
-        }
-
-         static int Sub(int a, int b)
-        {
-            return a - b;
-        }
-
-        // pass the function in function and call with delegate
-        static int MathOperation(Del2 d2, int a, int b)
-        {
-            return d2(a, b);
-        }
-
-        static void Display(string s1, string s2)
-        {
-            Console.WriteLine(s1 +" "+s2);
-        }
-
-        static string GetTime()
-        {
-            return DateTime.Now.ToLongTimeString();
-        }
-
-        static bool IsEven(int a)
-        {
-            return a % 2 == 0;
+            }
+            Console.ReadLine();
         }
 
+        static void Main5() // custome exception
+        {
+            try
+            {
+                Class1 obj = new Class1();
+                //obj = null;
+                int x = Convert.ToInt32(Console.ReadLine());
+                obj.P1 = x;
+                Console.WriteLine(obj.P1);
+                Console.WriteLine("no exception");
+            }
+            catch (NullReferenceException nre)
+            {
+                Console.WriteLine("NullReference Exception");
+                Console.WriteLine(nre.Message);
+            }
+            catch (FormatException fe)
+            {
+                Console.WriteLine("Format exception");
+                Console.WriteLine(fe.Message);
+            }
+            catch (ArithmeticException ae)
+            {
+                Console.WriteLine("Arithmatic exception");
+                Console.WriteLine(ae.Message);
+            }
+            catch (ApplicationException aae)
+            {
+                Console.WriteLine("ApplicationException exception occure");
+                Console.WriteLine(aae.Message);
+            }
+            catch (SystemException se)
+            {
+                Console.WriteLine("SystemException exception occure");
+                Console.WriteLine(se.Message);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                Console.WriteLine("finnaly block:  over ");
+            }
+            Console.WriteLine("bye bye");
+        }
+
+        static void Main6() // partial class demo
+        {
+            PC pc = new PC();
+            //Console.WriteLine(pc.i);
+            //Console.WriteLine(pc.j);
+            //Console.WriteLine(pc.k);
+            //Console.WriteLine(pc.l);
+            pc.Display();
+        }
+
+        static void Main7() // anonymous type
+        {
+            var i = 10;
+            Console.WriteLine(i.GetType()); //System.Int32
+            var x = 12.5;
+            Console.WriteLine(x.GetType()); // System.Double
+            var y = "Faisalkhan";
+            Console.WriteLine(y.GetType()); // System.String
+
+
+
+            var obj = new { a = "faisal", b = 25, c = 8.89, d = true };
+            Console.WriteLine(obj.a); //faisal
+            Console.WriteLine(obj.b); //25
+            Console.WriteLine(obj.c); // 8.89
+            Console.WriteLine(obj.d); //true
+            Console.WriteLine(obj); // { a = "faisal", b = 25, c = 8.89, d = true }
+            Console.WriteLine(obj.GetType()); // <>f__AnonymousType0`4[System.String,System.Int32,System.Double,System.Boolean]
+        }
+
+        static void Main()
+        {
+            PC pc = new PC();
+            //pc.Show();
+        }
     }
 
-     
-    class IntegerStack
+    //custom exception
+    public class P1Exe : ApplicationException
     {
-        int[] arr;
-
-        public IntegerStack(int size)
+        public P1Exe(string msg) : base(msg)
         {
-            arr = new int[size];
-        }
-        int pos = -1;
 
-        public void Push(int element)
-        {
-            if (pos != (arr.Length - 1))
-            {
-                arr[++pos] = element;
-            }
-            else
-            {
-                Console.WriteLine("stack overflow");
-            }
-        }
-
-        public int Pop()
-        {
-            if (pos == -1)
-            {
-                Console.WriteLine("stack under flow");
-                return -1;
-            }
-            else
-            {
-                return arr[pos--];
-            }
         }
     }
 
-    class StringStack
+    public partial class PC
     {
-        string[] arr;
-
-        public StringStack(int size)
+        public PC()
         {
-            arr = new string[size];
+            Show();
         }
-        int pos = -1;
-
-        public void Push(string element)
-        {
-            if (pos != (arr.Length - 1))
-            {
-                arr[++pos] = element;
-            }
-            else
-            {
-                Console.WriteLine("stack overflow");
-            }
-        }
-
-        public string Pop()
-        {
-            if (pos == -1)
-            {
-                //Console.WriteLine("stack under flow");
-                return "stack under flow";
-            }
-            else
-            {
-                return arr[pos--];
-            }
-        }
+        public int i = 10;
+        partial void Show();
     }
 
-    class MyStack<T>
+    public partial class PC
     {
-        T[] arr;
-
-        public MyStack(int size)
+        public int j = 20;
+        partial void Show()
         {
-            arr = new T[size];
-        }
-        int pos = -1;
-
-        public void Push(T element)
-        {
-            if (pos != (arr.Length - 1))
-            {
-                arr[++pos] = element;
-            }
-            else
-            {
-                Console.WriteLine("stack overflow");
-            }
-        }
-
-        public T Pop()
-        {
-            if (pos == -1)
-            {
-                //Console.WriteLine("stack under flow");
-                //return -1;
-                throw new Exception("stack underflow");
-            }
-            else
-            {
-                return arr[pos--];
-            }
+            Console.WriteLine("in partial method show");
         }
     }
 
+    public partial class PC
+    {
+       public  int k = 30;
+    }
     public class Class1
     {
-        public int Mul(int x, int y)
-        {
-            return x * y;
-        }
+        int p1;
 
-        public static int Div(int x, int y)
+        public int P1
         {
-            return x / y;
+            get { return p1; }
+            set 
+            {
+                if (value > 100)
+                {
+                    throw new P1Exe("invalid p1");
+                }
+                p1 = value; 
+            }
         }
     }
-    
+}
+namespace PracticeDay5
+{
+    public partial class PC
+    {
+        public int l = 100;
+
+        public void Display()
+        {
+            Console.WriteLine(i+" "+j+" "+k+" "+l);
+        }
+    }
 }
 
-    
+
+

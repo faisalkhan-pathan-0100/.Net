@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+//Code for LINQ and PLINQ
+using System.Diagnostics;
 
 namespace PracticeDay6
 {
